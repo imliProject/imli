@@ -29,7 +29,11 @@ module.exports = (sequelize, DataTypes) => {
         VendID: {
         type: DataTypes.CHAR(8),
         allowNull: false
-    },
+        },
+        ItemStatus: {
+            type: DataTypes.CHAR(1),
+            allowNull: false
+        },
     }) 
      
 

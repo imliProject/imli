@@ -2,24 +2,34 @@ import React, { useState } from 'react';
 import { View, StyleSheet, Text, TouchableOpacity, FlatList, Dimensions, SafeAreaView, ScrollView, Alert, Image } from "react-native";
 import { Card, Avatar, TextInput, Title, Paragraph, Provider as PaperProvider } from 'react-native-paper';
 import { launchImageLibrary } from 'react-native-image-picker';
+import SelectDropdown from 'react-native-select-dropdown'
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import axios from 'axios';
 import {Base_Url} from '@env';
 
-const VendAdminScreen = ({ navigation }) => {
+const ItemAdminScreen = ({ navigation }) => {
 
     const [vendid, setVendId] = React.useState(null);
-    const [vendname, setVendName] = React.useState(null);
-    const [vendmobile, setVendMobile] = React.useState(null);
-    const [vendemailid, setVendEmailID] = React.useState(null);
-    const [vendcity, setVendCity] = React.useState(null);
-    const [vendlogopath, setVendLogoPath] = React.useState(null);
-    const [vendstatus, setVendStatus]  = React.useState(null);
-    const [Pic, setPic] = React.useState(null);
+    const [itemid, setItemID] = React.useState(null);
     const [itemname, setItemName] = React.useState(null);
-    const [itemprc, setItemPrc] = React.useState(null);
+    const [itemcolor, setItemColor] = React.useState(null);
+    const [noofitems, setNoOfItems] = React.useState(null);
+    const [itemstatus, setItemStatus]  = React.useState(null);
+    const [itempic, setItemPic] =  React.useState(null);
+    const [Pic, setPic] = React.useState(null);
+    const [categoryid, setCategoryID] = React.useState(null);
+    const [unitprice, setUnitPrice] = React.useState(null);
     const [ftype, setFType] = React.useState(null);
     const [fname, setFName] = React.useState(null);
+
+    const TypeList = ["Daughter Marriage",
+        "Dewali Celebrations",
+        "Marrige Anniverssary",
+        "Promotion Party",
+        "House Warming Party",
+        "Birthday Celebration",
+        "Others"
+    ]
 
     // console.log('in category image: ',  Pic, itemprc, itemname)
     // const ItemImgSave = () => {
@@ -63,7 +73,7 @@ const VendAdminScreen = ({ navigation }) => {
                 )
             } else {
                 setPic(response.assets[0].uri)
-                setVendLogoPath(response.assets[0].uri)
+                setItemPic(response.assets[0].uri)
                 setFType(response.assets[0].type)
                 setFName(response.assets[0].fileName)
                 console.log('the response is: ', response.assets[0].uri, response.assets[0].type, response.assets[0].fileName);
@@ -73,16 +83,16 @@ const VendAdminScreen = ({ navigation }) => {
     };
 
     // });
-    const VendorSave = (item) => {
+    const ItemSave = (item) => {
   
-      axios.post(Base_Url + '/admin/addvendor', {
+      axios.post(Base_Url + '/admin/additem', {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json"
         },
-        VendID: vendid, VendName: vendname, VendMobile: vendmobile, VendEmailID: vendemailid, VendCity: vendcity, VendLogoPath: vendlogopath, VendStatus: vendstatus
+        ItemID: itemid, ItemName: itemname, ItemPic: itempic, UnitPrice: unitprice, NoOfItems: noofitems, ItemColor: itemcolor, CategoryID: categoryid, VendID: vendid, ItemStatus: itemstatus
            
-      })
+      }) 
         .then(data => {
           Alert.alert("Record Inserted successfully");
           // return response.data();
@@ -121,54 +131,84 @@ const VendAdminScreen = ({ navigation }) => {
                                 <TouchableOpacity
                                 activeOpacity={0.5}
                                 onPress={handleUploadPhoto}>
-                                    <Text> <Icon name="upload-file" style={{ color: '#0000FF', fontWeight: 'bold', fontSize: 30 }} />Upload Logo</Text>
+                                    <Text> <Icon name="upload-file" style={{ color: '#0000FF', fontWeight: 'bold', fontSize: 30 }} />Upload Item Image</Text>
                                 </TouchableOpacity>
                             {/* </View> */}
+                            <View>
+                            <SelectDropdown
+                                        defaultButtonText='Select Vendor'
+                                        data={TypeList}
+                                        onSelect={(selectedItem, index) => {
+                                            console.log(selectedItem, index)
+                                            setVendId(selectedItem);
+                                        }}
+                                        buttonTextAfterSelection={(selectedItem, index) => {
+                                            // AddTheSelect(selectedItem);
+                                            // setOccasionDesc(selectedItem);
+                                            // // setOccID(1);
+                                            // setStatus('A');
+                                            // text represented after item is selected
+                                            // if data array is an array of objects then return selectedItem.property to render after item is selected
+                                            return selectedItem
+                                        }}
+                                        rowTextForSelection={(item, index) => {
+                                            // text represented for each item in dropdown
+                                            // if data array is an array of objects then return item.property to represent item in dropdown
+                                            return item
+                                        }}
+                                    />
+                                    </View>
                            </Card.Content>
                            </Card>
                       <Card style={{ flex: 1,  width: 350,  backgroundColor: 'powderblue', flexDirection: 'row', justifyContent: 'space-between'}}>
-                      <Text style={{ flex: 1, alignItems: 'center'}}> Vendor Detail</Text>
+                      <Text style={{ flex: 1, alignItems: 'center'}}> Item Detail</Text>
                       <Card.Content style={{ flex: 1,  width: 350}}>
                       <TextInput
                             style={{ marginTop: 5 }}
-                            label='VendorID'
+                            label='ItemID'
                             mode='outlined'
-                            onChangeText={(VendID) => setVendId(VendID)}
+                            onChangeText={(ItemID) => setItemID(ItemID)}
                             />
                       <TextInput
                             style={{ marginTop: 5 }}
-                            label='VendorName'
+                            label='ItemName'
                             mode='outlined'
-                            onChangeText={(VendName) => setVendName(VendName)}
+                            onChangeText={(ItemName) => setItemName(ItemName)}
                             />
                       <TextInput
                             style={{ marginTop: 5 }}
-                            label='VendorMobile'
+                            label='UnitPrice'
                             mode='outlined'
-                            onChangeText={(VendMobile) => setVendMobile(VendMobile)}
+                            onChangeText={(UnitPrice) => setUnitPrice(UnitPrice)}
                             />
                       <TextInput
                             style={{ marginTop: 5 }}
-                            label='VendorEmailID'
+                            label='NoOfItems'
                             mode='outlined'
-                            onChangeText={(VendEmailID) => setVendEmailID(VendEmailID)}
+                            onChangeText={(NoOfItems) => setNoOfItems(NoOfItems)}
                             />
                             <TextInput
                             style={{ marginTop: 5 }}
-                            label='VendorCity'
+                            label='ItemColor'
                             mode='outlined'
-                            onChangeText={(VendCity) => setVendCity(VendCity)}
+                            onChangeText={(ItemColor) => setItemColor(ItemColor)}
                             />
                       <TextInput
                             style={{ marginTop: 5 }}
-                            label='VendorStatus'
+                            label='CategoryID'
                             mode='outlined'
-                            onChangeText={(vendstatus) => setVendStatus(vendstatus)}
+                            onChangeText={(CategoryID) => setCategoryID(CategoryID)}
+                            />
+                      <TextInput
+                            style={{ marginTop: 5 }}
+                            label='ItemStatus'
+                            mode='outlined'
+                            onChangeText={(ItemStatus) => setItemStatus(ItemStatus)}
                             />
                             </Card.Content>
                       </Card>
                       
-                      <TouchableOpacity onPress={VendorSave}>
+                      <TouchableOpacity onPress={ItemSave}>
                       <Text style={{ color: '#0000FF', fontWeight: 'bold', padding: 100, fontSize: 25 }}>
                             <Icon name="save" style={{ color: '#0000FF', fontSize: 25 }} /> Save </Text>
                             </TouchableOpacity>
@@ -333,4 +373,4 @@ const styles = StyleSheet.create({
   
   });
 
-export default VendAdminScreen;
+export default ItemAdminScreen;

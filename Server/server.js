@@ -141,7 +141,7 @@ const friendsrouter = require('./routes/friendsRouter.js')
 app.use('/api/friends', friendsrouter)
 
 const adminrouter = require('./routes/adminRouter.js')
-app.use('/api/vendors', adminrouter)
+app.use('/api/admin', adminrouter)
 
 
 //testing api

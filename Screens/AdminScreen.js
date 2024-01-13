@@ -124,7 +124,7 @@ const AdminScreen = ({ navigation }) => {
                 <Card.Content style={[styles.container]}>
                   {/* <ImageBackground  source={require('../Assets/images/gift_friends.jpg')} resizeMode="cover" style={styles.image}>  */}
                   <TouchableOpacity
-                    onPress={(() => { navigation.navigate('VendAdminScreen') })}
+                    onPress={(() => { navigation.navigate('ItemAdminScreen') })}
                   ><Text style={{ color: 'green', fontSize: 20, fontWeight: 'bold', textAlign: 'center', padding: 20 }}>
                     Add Items</Text>
                   </TouchableOpacity>
