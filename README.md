@@ -15,10 +15,10 @@ open terminal in visual studio
 cd SERVER folder ( C:\ImliGit\imli\server>) ImliGit is created through git )
 run command 'node server.js' make sure the below code in INDEX.JS file in models dirrectory
 for first run: This will create/alter the tables defined in the model
-> db.sequelize.sync({ alter: true })
->  .then(() => {
->   console.log(' re-sync done')
-> })
+` db.sequelize.sync({ alter: true })
+  .then(() => {
+   console.log(' re-sync done')
+ })`
 
 for subsquent runs: force: false should be good.
 db.sequelize.sync({ force: false })
