@@ -1,4 +1,4 @@
-How to set up:
+### How to set up:
 Download MySQl latest version mysql-installer-community 8.0.29
 Download Android-studio-2021.2.1.15-windows
 https://reactnative.dev/docs/environment-setup ( here also android set up is provided)
