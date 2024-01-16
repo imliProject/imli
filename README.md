@@ -5,7 +5,7 @@
                OR
      1. Download and install JDK 17 :  https://www.openlogic.com/openjdk-downloads
      2.  https://reactnative.dev/docs/environment-setup ( here also android set up is provided)
--  Download vidualstudio code
+-  Download vidualstudio code and Android Studio (if not available)
 
 ### How to run the application:
 -  Open android studio
