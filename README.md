@@ -1,7 +1,8 @@
 ### How to set up:
 -  Download MySQl latest version mysql-installer-community 8.0.29
--  Download Android-studio-2021.2.1.15-windows
--  https://reactnative.dev/docs/environment-setup ( here also android set up is provided)
+     1. Download Android-studio-2021.2.1.15-windows <br>
+               OR
+     2. https://reactnative.dev/docs/environment-setup ( here also android set up is provided)
 -  Download vidualstudio code 
 
 ### How to run the application:
