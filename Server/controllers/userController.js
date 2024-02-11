@@ -121,7 +121,7 @@ const addUser = async (req, res) => {
     UserName: req.body.UserName,
     UserEmailID: req.body.UserEmailID,
     UserMobile: req.body.UserMobile,
-    UserPicPath: req.body.UserPicPath,
+    // UserPicPath: req.body.UserPicPath,
   }
   console.log('in addUser');
   const exuser = await NewUser.findOne({ where: {UserMobile: req.body.UserMobile} });

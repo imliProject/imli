@@ -45,6 +45,9 @@ const UserOccScreen = ({ navigation }) => {
     useEffect(() => {
 
         // const [OccList, setOccList] = useState([]);
+        setTimeout(() => {
+             
+          
         axios.get(Base_Url + '/occasion/getusroccdtlbydate/' + UserID)
             .then(res => {
                 console.log('from fetch user Occ list:', res.data);
@@ -53,7 +56,7 @@ const UserOccScreen = ({ navigation }) => {
             .catch(error => {
                 console.error(error);
             });
-
+        }, 3000);
     }, []);
 
     const showPickers = () => {
@@ -131,6 +134,7 @@ const UserOccScreen = ({ navigation }) => {
                 throw error;
 
             });
+           
     }
     return (
         <PaperProvider>

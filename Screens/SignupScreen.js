@@ -4,7 +4,7 @@ import { Avatar, Card, Button, Title, TextInput, Paragraph, label, Provider as P
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import validator from 'validator';
 import axios from 'axios';
-import {Base_Url} from '@env';
+import { Base_Url } from '@env';
 
 const BLUE = "#428AF8"
 const LIGHT_GRAY = "#D3D3D3"
@@ -34,42 +34,43 @@ const Signup = ({ navigation }) => {
 
   const validateMobile = (userMobile) => {
     setUserMobile(userMobile)
-     if (!userMobile) {
+    if (!userMobile) {
       setIsPhError('Phone number Required')
       return;
-     }
-     if ( validator.isMobilePhone(userMobile)) {
+    }
+    if (validator.isMobilePhone(userMobile)) {
       setIsPhError(' ')
-     }
+    }
     else {
-      setIsPhError( 'Please Enter a valid Phone Number')
+      setIsPhError('Please Enter a valid Phone Number')
     }
   }
   const validateEmail = (userEmailID) => {
     setUserEmailID(userEmailID)
     if (!userEmailID) {
-      setIsError( 'Email Required')
+      setIsError('Email Required')
       return;
     }
-    if ( validator.isEmail (userEmailID) ) {
+    if (validator.isEmail(userEmailID)) {
       setIsError(' ')
     }
     else {
-      setIsError( 'Please Enter a valid Email address')
+      setIsError('Please Enter a valid Email address')
     }
 
   }
   const MoveLogin = (UserID, Password) => {
-    console.log('in movelogin' , UserID, Password);
+    console.log('in movelogin', UserID, Password);
     axios.post(Base_Url + '/users/addlogin', {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json"
-    },
-       UserID: UserID, Password: Password 
+      },
+      UserID: UserID, Password: Password
     }).then(function (response) {
       console.log("In response:", UserID);
       Alert.alert("User register successfully \n userID: " + UserID);
+      navigation.navigate('Login');
       return response.data;
     })
       .catch(function (error) {
@@ -80,14 +81,14 @@ const Signup = ({ navigation }) => {
   }
 
   const register = async () => {
-    console.log('in register');
+    console.log('in register', Base_Url);
     // alert(called);
     axios.post(Base_Url + '/users/adduser', {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json"
-    },
-     UserID: userID, UserEmailID: userEmailID, UserName: userName, UserMobile: userMobile, UserPicPath: Pic 
+      },
+      UserID: userID, UserEmailID: userEmailID, UserName: userName, UserMobile: userMobile
     }).then(function (response) {
       console.log("In response:", userID);
       MoveLogin(userID, Password);
@@ -108,35 +109,40 @@ const Signup = ({ navigation }) => {
     <PaperProvider>
       <SafeAreaView>
         <ScrollView>
+          <View style={styles.container}>
+            <View style={styles.header}>
+              <View>
+                <Image
+                  style={styles.tinyLogo}
+                  source={require('../Assets/imli_logo.png')}
+                />
+              </View>
 
-          <View>
-            <Card style={{ marginTop: 100 }}>
+              <View>
+                <Button icon="help-circle" mode="elevated" textColor="#000080" onPress={() => { help() }}>
+                  Help
+                </Button>
+              </View>
+            </View>
+
+            <View style={styles.mainbody}>
               <TextInput
-                style={{ marginTop: 5 }}
+                style={styles.inputStyle}
                 label='UserID'
                 mode='outlined'
                 maxLength={10}
                 onChangeText={(userID) => setuserID(userID)}
               />
-              {/* <DropDown style={[styles.dropdown, { borderColor: 'blue' }]}
-              label={"UserRole"}
-              mode={"outlined"}
-              visible={showDropDown}
-              showDropDown={() => setShowDropDown(true)}
-              onDismiss={() => setShowDropDown(false)}
-              value={UserRoleID}
-              setValue={setUserRoleID}
-              list={TypeList}
-            /> */}
+
               <TextInput
-                style={{ marginTop: 15 }}
+                style={styles.inputStyle}
                 label='Name'
                 mode='outlined'
                 onChangeText={(userName) => setUserName(userName)}
               />
               <TextInput
-                style={{ marginTop: 15 }}
-                label='Mobile Number'
+                style={styles.inputStyle}
+                label='Mobile'
                 mode='outlined'
                 keyboardType="numeric"
                 maxLength={10}
@@ -151,16 +157,16 @@ const Signup = ({ navigation }) => {
                   )
                   // setIsError(false) 
                 )} */}
-                {isPhError ? <Text style={styles.errorMessage}>{isPhError}</Text> : null
-                }
+              {isPhError ? <Text style={styles.errorMessage}>{isPhError}</Text> : null
+              }
               <TextInput
-                style={{ marginTop: 15 }}
+                style={styles.inputStyle}
                 label='Email'
                 mode='outlined'
                 // onChangeText={(userEmailID) => setUserEmailID(userEmailID)}
                 onChangeText={validateEmail}
                 keyboardType='email-address'
-                
+
               />
               {/* {isError !== null && (
                   isError ? (
@@ -171,49 +177,23 @@ const Signup = ({ navigation }) => {
                   )
                   // setIsError(false) 
                 )} */}
-                {isError ? <Text style={styles.errorMessage}>{isError}</Text> : null}
+              {isError ? <Text style={styles.errorMessage}>{isError}</Text> : null}
               <TextInput
-                style={{ marginTop: 15 }}
+                style={styles.inputStyle}
                 label='Password'
                 mode='outlined'
                 secureTextEntry={true}
                 onChangeText={(password) => setPassword(password)}
               />
-              {/* <TextInput
-              style={{ marginTop: 15 }}
-              label='Confirm Password'
-              mode='outlined'
-              onChangeText={Password => setPassword(Password)}
-            /> */}
-            </Card>
-          </View>
-          <View style={{ flexDirection: 'row' }}>
-            <Text>Already have Account?? </Text>
-            <TouchableOpacity
-              style={{ alignItems: 'center' }}
-              onPress={(() => { navigation.navigate('Login') })}
-            ><Text style={{ color: 'red' }}>Login </Text>
-            </TouchableOpacity>
-          </View>
-          <View style={{ flexDirection: 'row', alignItems: 'center', paddingTop: 10, paddingLeft: 25, justifyContent: 'space-between' }}>
-            <TouchableOpacity
-              onPress={register}
-            >
-              <Text style={{ color: '#0000FF', fontWeight: 'bold', padding: 2, fontSize: 15 }}>
-                <Icon name="save" style={{ color: '#0000FF', fontSize: 25 }} /> Save </Text>
+            </View>
 
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={(() => { navigation.navigate('Login') })}
-            // onPress={onPress}
-            >
-              <Text style={{ color: 'red', fontWeight: 'bold', padding: 2, fontSize: 15 }} >
-                <Icon name="cancel" style={{ color: 'red', fontSize: 25 }} /> Cancel  </Text>
-              {/* <Text style={{ color: 'red', fontWeight:'bold', fontSize:20 }}>Cancel </Text> */}
-            </TouchableOpacity>
+
+            <View>
+              <Button icon="content-save" mode="contained" buttonColor="green" style={styles.buttonstyle} onPress={register}> Save </Button>
+              
+              <Button icon="close-circle" mode="elevated" textColor="#FF0000" style={styles.buttonstyle} onPress={(() => { navigation.navigate('Login') })}> Cancel </Button>
+            </View>
           </View>
-          {/* </View> */}
-          {/* </SafeAreaView> */}
         </ScrollView>
       </SafeAreaView>
     </PaperProvider>
@@ -221,50 +201,28 @@ const Signup = ({ navigation }) => {
   );
 }
 const styles = StyleSheet.create({
-  center: {
+  container: {
+    padding: 20,
+    paddingTop: 10,
+  },
+  tinyLogo: {
+    width: 50,
+    height: 50,
+    borderRadius: 50
+  },
+  header: {
     flex: 1,
-    justifyContent: "center",
+    flexDirection: "row",
+    justifyContent: "space-between",
     alignItems: "center",
-    textAlign: "center",
+    // backgroundColor: "red"
   },
-  button: {
-    alignItems: "flex-end",
-    backgroundColor: "#DDDDDD",
-    padding: 5,
+  mainbody: {
+    marginTop: 50,
   },
-  innerText: {
-    justifyContent: 'space-between',
-    color: 'red',
-    fontWeight: 'bold',
-    fontSize: 45,
+  buttonstyle: {
+    marginTop: 20,
   },
-  input: {
-    width: '80%',
-    height: 44,
-    padding: 10,
-    marginBottom: 10,
-    backgroundColor: 'lightblue'
-  },
-  dropdown: {
-    height: 20,
-    borderColor: 'gray',
-    borderWidth: 0.5,
-    borderRadius: 8,
-    paddingHorizontal: 2,
-  },
-  errorMessage: {
-    color: 'red',
-    },
-    validMark: {
-    color: 'green',
-    marginLeft: 5,
-    fontSize: 20,
-    },
-    invalidMark: {
-    color: 'red',
-    marginLeft: 5,
-    fontSize: 20,
-    }
 });
 
 export default Signup;

@@ -12,7 +12,8 @@ const AuthStack = ({ navigation }) => {
 
     <Stack.Navigator>
       <Stack.Group screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="Landing" component={LandingScreen} />
+        <Stack.Screen name="Landing" component={Login} />
+        {/* <Stack.Screen name="Landing" component={LandingScreen} /> */}
         <Stack.Screen name="Signup" component={Signup} />
         <Stack.Screen name="Login" component={Login} />
       </Stack.Group>

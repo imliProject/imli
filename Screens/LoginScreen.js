@@ -1,9 +1,9 @@
 import React, { useState, useContext } from "react";
-import { View, StyleSheet, SafeAreaView, TouchableOpacity, Text, Image, ImageBackground, ScrollView } from "react-native";
-// import { ScrollView } from "react-native-gesture-handler";
-import { Card, TextInput, Provider as PaperProvider } from 'react-native-paper';
+import { Button } from 'react-native-paper';
+import { View, StyleSheet, SafeAreaView, TouchableOpacity, Text, Image, ScrollView } from "react-native";
+import { TextInput, Provider as PaperProvider } from 'react-native-paper';
 import { AuthContext } from '../Context/AuthContext';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+// import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
 
 
 const BLUE = "#428AF8"
@@ -16,66 +16,93 @@ const Login = ({ navigation }) => {
 
   const { login } = useContext(AuthContext);
 
-  // const goback = () => {
-  //   navigate('LandingScreen');
-  // }
+  // useEffect(() => {
+  //   GoogleSignin.configure({
+  //     webClientId: "698237364896-orst5ee9e0io9ui2olm4nhf1508c4ptg.apps.googleusercontent.com", 
+  //     offlineAccess: true
+  //   });
+  // }, [])
+
+  // const GoogleSingUp = async () => {
+  //   try {
+  //     await GoogleSignin.hasPlayServices();
+  //     await GoogleSignin.signIn().then(result => { console.log(result) });
+  //   } catch (error) {
+  //     if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+  //       // user cancelled the login flow
+  //       alert('User cancelled the login flow !');
+  //     } else if (error.code === statusCodes.IN_PROGRESS) {
+  //       alert('Signin in progress');
+  //       // operation (f.e. sign in) is in progress already
+  //     } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+  //       alert('Google play services not available or outdated !');
+  //       // play services not available or outdated
+  //     } else {
+  //       console.log(error)
+  //     }
+  //   }
+  // };
+
+  const help = () => {
+    navigation.navigate('Login');
+  }
 
   return (
 
     <PaperProvider>
       <SafeAreaView>
         <ScrollView>
-          <View style={{ marginTop: 150 }}>
-          {/* <View> */}
-          {/* <ImageBackground  source={require('../Assets/logo.png')} resizeMode="stretch"  style={styles.img}>  */}
-        <Card style={{ flexDirection: 'row', justifyContent: 'space-between' , backgroundColor: 'lightgreen', alignContent: 'center' }}>
-            <Card.Content style={{ width: 300, height: 250 }}>  
-            {/* <ImageBackground  source={require('../Assets/logo.png')} resizeMode="stretch"  style={styles.img}>    */}
-            <View >
-            <TextInput
-              style={{ marginTop: 5, width: 300  }}
-              label='UserID' 
-              mode='outlined'
-              onChangeText={(userID) => setuserID(userID)}
-            />
-            <TextInput
-              style={{ marginTop: 5, width: 300 }}
-              label='Password'
-              mode='outlined'
-              secureTextEntry={true}
-              // value='Password'
-              onChangeText={(Password) => setPassword(Password)}
-            />
-            </View>
-            {/* </Card.Content>
-            </Card>
-            <Card>
-            <Card.Content style={{ width: 175, height: 270 }}> */}
-            <View  style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
-              <TouchableOpacity
-                style={{ width: 300, marginTop: 5, padding: 5, borderRadius: 50, alignItems: 'center' }}
+          <View style={styles.container}>
 
-                onPress={() => { login(userID, Password) }}
-              >
-                <Text style={{ color: 'green' }}> <Icon name="login" style={{ color: '#FFBF00', fontSize: 35 }} />Login</Text>
-              </TouchableOpacity>
+            <View style={styles.header}>
+
+              <View>
+                <Image
+                  style={styles.tinyLogo}
+                  source={require('../Assets/imli_logo.png')}
+                />
+              </View>
+
+              <View>
+                <Button icon="help-circle" mode="elevated" textColor="#000080" onPress={() => { help() }}>
+                  Help
+                </Button>
+              </View>
 
             </View>
-            <View style={{ flexDirection: 'row' }}>
-              <Text>Do not have account?? </Text>
-              <TouchableOpacity
-                // style={{ alignItems: 'center' }}
-                style={{ width: 80, borderRadius: 10, alignItems: 'center' }}
-                onPress={(() => { navigation.navigate('Signup') })}
-              ><Text style={{ color: 'red' }}>SignUp </Text>
-              </TouchableOpacity>
 
+            <View style={styles.mainbody}>
+              <TextInput
+                label='Email ID'
+                mode='outlined'
+                onChangeText={(userID) => setuserID(userID.trim())}
+              />
+
+              <TextInput
+                label='Password'
+                mode='outlined'
+                secureTextEntry={true}
+                onChangeText={(Password) => setPassword(Password.trim())}
+              />
+
+              <Text style={styles.forgotPassword}>Forgot Password ?</Text>
+
+              <Button icon="login" mode="contained" buttonColor="green" style={styles.buttonstyle} onPress={() => { login(userID, Password) }}> Login </Button>
+
+              <Button icon="facebook" mode="contained" buttonColor="#000080" style={styles.buttonstyle} onPress={() => { login(userID, Password) }}> Sign In with Facebook </Button>
+
+              <Button icon="google" mode="contained" buttonColor="#FF0000" style={styles.buttonstyle} onPress={() => { login(userID, Password) }}> Sign In with Google </Button>
+
+              <View
+                style={{
+                  borderBottomColor: 'black',
+                  borderBottomWidth: StyleSheet.hairlineWidth,
+                  marginTop: 25
+                }}
+              />
+
+              <Button icon="account" mode="contained" buttonColor="#DAA520" style={styles.buttonstyle} onPress={() => { navigation.navigate('Signup') }}> Sign up </Button>
             </View>
-            {/* </ImageBackground>  */}
-            {/* </View> */}
-          </Card.Content>
-            </Card>
-            {/* </ImageBackground> */}
           </View>
         </ScrollView>
       </SafeAreaView>
@@ -84,28 +111,38 @@ const Login = ({ navigation }) => {
   );
 }
 const styles = StyleSheet.create({
-  center: {
+  container: {
+    padding: 20,
+    paddingTop: 10,
+  },
+  tinyLogo: {
+    width: 50,
+    height: 50,
+    borderRadius: 50
+  },
+  forgotPassword: {
+    marginTop: 10,
+    color: "blue"
+  },
+  header: {
     flex: 1,
-    justifyContent: "center",
+    flexDirection: "row",
+    justifyContent: "space-between",
     alignItems: "center",
-    textAlign: "center",
+    // backgroundColor: "red"
   },
-  button: {
-    alignItems: "center",
-    backgroundColor: "#DDDDDD",
-    padding: 15,
+  btnLogo: {
+    margin: 0,
+    padding: 0,
+    fontSize: 16,
+    paddingRight: 50
   },
-  input: {
-    width: '80%',
-    height: 44,
-    padding: 10,
-    marginBottom: 10,
-    backgroundColor: 'lightblue'
+  mainbody: {
+    marginTop: 100,
   },
-  img: { 
-    justifyContent: 'center', 
-    alignItems: 'center', 
-  }, 
+  buttonstyle: {
+    marginTop: 20,
+  },
 });
 
 export default Login;

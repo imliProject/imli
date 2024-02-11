@@ -75,11 +75,19 @@ const HomeScreen = ({ navigation }) => {
 
     }
     // useEffect(() => {
-
-      getWishListCnt();
-      getIFrnds();
-      getIFrndsCnt();
-      getOccCnt();
+      setTimeout(() => {
+        getWishListCnt();
+      }, 3000);
+      setTimeout(() => {
+        getIFrnds();
+      }, 3000);
+      setTimeout(() => {
+        getIFrndsCnt();
+      }, 3000);
+      setTimeout(() => {
+        getOccCnt();
+      }, 3000);
+      
       
       // axios.get(Base_Url + '/users/getuseritemscnt/' + UserID)
       // .then(res => {

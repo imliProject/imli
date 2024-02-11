@@ -63,7 +63,12 @@ const FriendsScreen = ({ navigation }) => {
 
     console.log('from fetch get Friends Mobile:', frndsMob);
 
-    axios.get(Base_Url + '/users/getusrbymob/' + frndsMob)
+    axios.get(Base_Url + '/users/getusrbymob/' + frndsMob,  {
+      headers: {
+        Accept: "application/json",
+        "content-type": "application/json"
+      },
+    })
       .then(response => {
         console.log('Response :', response.data)
         if (response.data.length > 0) {

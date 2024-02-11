@@ -28,7 +28,7 @@ const router = express.Router();
 // router.get('/getuserpic/:userID', userController.getUserPic)
 // router.post('/addlogin', userController.addLogin)
 // router.get('/getlogin/:userID/:Password', userController.getLogin)
-router.get('/getadmin/:userID/:Password', userController.getAdmin)
+// router.get('/getadmin/:userID/:Password', userController.getAdmin)
 // router.post('/adduser', userController.addUser)
 // // router.post('/adduseraddr', userController.addUserAddr)
 // router.get('/getoneuser/:userID', userController.getOneUser)
