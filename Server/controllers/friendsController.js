@@ -77,11 +77,11 @@ const getRqstRcvdByUid = async (req, res) => {
 
 // get IMLI friends for current user  and Status as A
 const getIFriendsById = async (req, res) => {
-  const id = req.params.UserID;
+  const id = req.params.Id;
   let userfrnds = await UsrImliFrnds.findAll({ 
     where: { 
       [Op.or] : [{
-        UserID: id
+        id: id
       },
       {
         UserFrndsID: id
@@ -126,9 +126,9 @@ const getIFriendsCntById = async (req, res) => {
 
 //Get mobile of the user  whome request is sent
 const getMobilesByUid = async (req, res) => {
-  const id = req.params.UserID;
+  const id = req.params.Id;
   let umobile = await UsrImliFrnds.findAll({
-    where: { UserID: id, RequestStatus: 'S'},
+    where: { id: id, RequestStatus: 'S'},
   })
   res.status(200).send(umobile)
 }

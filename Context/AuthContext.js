@@ -1,7 +1,7 @@
-import {Base_Url} from '@env';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { createContext, useState, useEffect } from 'react';
 import axios from 'axios';
+import { Base_Url } from '@env';
 
 // import { resolvePath } from 'react-native-reanimated/lib/types/lib/reanimated2/animation/styleAnimation';
 import { Alert } from 'react-native';
@@ -13,9 +13,8 @@ export const AuthProvider = ({ children }) => {
   const [userToken, setUserToken] = useState(null);
   const [adminToken, setAdminToken] = useState(null);
   const [UserName, setUserName] = useState("");
-  const [UserID, setUserID] = useState("");
   const [UserMobile, setUserMobile] = useState("");
-  const [UserEmailId, setuserEmailId] = useState("");
+  const [Id, setId] = useState("");
    
 
   useEffect(() => {
@@ -24,37 +23,44 @@ export const AuthProvider = ({ children }) => {
     // getuserType(userName);
   }, []);
   
-  const login = (UserID, Password) => {
-    console.log( 'In the AuthContext axios' , UserID, Password);
+  const login = (UserEmailID, Password) => {
     // setUserToken('fdsdsfsd');
     // AsyncStorage.setItem('userToken', 'fdsdsfsd');
-    if (UserID !== "Admin") {
-    getUserToken(UserID, Password)
+    if (UserEmailID !== "Admin") {
+    getUserToken(UserEmailID, Password)
     }
   else {
-    getAdminToken(UserID, Password)
+    getAdminToken(UserEmailID, Password)
   }
     // {userID !== 'Admin' ? getUserToken : getAdminToken}   
   }
-  const getUserToken = (UserID, Password) => {
-    console.log( 'In getUserToken ', UserID, Base_Url);
-    axios.get(Base_Url + '/users/getlogin/'+ UserID + '/' + Password)
-    // axios.get('http://192.168.0.103:3000/api/users/getlogin/'+ UserID + '/' + Password)
+  const getUserToken = (UserEmailID, Password) => {
+    console.log( 'In getUserToken ');
+    axios.get('http://192.168.0.118:3000/api/users/getlogin/'+ UserEmailID + '/' + Password, {
+      headers: {
+        Accept: "application/json",
+        "content-type": "application/json"
+      },
+    })
+    // axios.get('http://192.168.1.42:3000/api/users/getlogin/'+ UserEmailID + '/' + Password)
+    // axios.get(Base_Url + '/users/getlogin/'+ UserEmailID + '/' + Password)
     .then(res => {
+    // console.log( 'getUserToken ', 'http://192.168.29.123:3000' + '/users/getlogin/'+ UserEmailID + '/' + Password, 'a....');
+
       // setUserID(userID);
       // setUserName(userName);
       setUserToken( res.data)
       AsyncStorage.setItem('userToken', res.data);
-      getUserDtl(UserID);
+      getUserDtl(UserEmailID);
    })
       .catch(function (error) {
         Alert.alert("Your user ID or Password is wrong")
       console.log(error);
   })
 }
-const getAdminToken = (UserID, Password) => {
-  console.log( 'In getAdminToken ', UserID)
-  axios.get(Base_Url + '/users/getadmin/'+ UserID + '/' + Password)
+const getAdminToken = (UserEmailID, Password) => {
+  console.log( 'In getAdminToken ', UserEmailID)
+  axios.get('http://192.168.0.118:3000/api' + '/users/getadmin/'+ UserEmailID + '/' + Password)
   .then(res => {
     // setUserID(userID);
     // setUserName(userName);
@@ -68,16 +74,16 @@ const getAdminToken = (UserID, Password) => {
 })
 }
   
-  const getUserDtl = (Userid) => {
+  const getUserDtl = (UserEmailID) => {
     
-    console.log('In the Auth Provider axios getuserMobile :', Userid );
-    axios.get(Base_Url + '/users/getoneuser/' + Userid)
+    console.log('In the Auth Provider axios getuserMobile :', UserEmailID );
+    axios.get('http://192.168.0.118:3000/api' + '/users/getoneuser/' + UserEmailID)
         .then(res => {
+             console.log('..............', res.data)
             // userRoleId.userrole = JSON.stringify(res.data.UserRoleID);
             setUserMobile(res.data.UserMobile);
-            setUserID(res.data.UserID);
             setUserName(res.data.UserName);
-            setuserEmailId(res.data.UserEmailID);
+            setId(res.data.id);
             console.log('In the Auth Provider axios', res.data.UserMobile);
         })
         .catch(e => { 
@@ -108,7 +114,7 @@ const getAdminToken = (UserID, Password) => {
   }
 
   return (
-    <AuthContext.Provider value={{ login, logout, userToken, adminToken, UserID, UserName, UserMobile, UserEmailId }}>
+    <AuthContext.Provider value={{ login, logout, userToken, adminToken, UserName, UserMobile, Id }}>
       {children}
     </AuthContext.Provider>
   )

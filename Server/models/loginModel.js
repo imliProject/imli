@@ -1,10 +1,10 @@
 module.exports = (sequelize, DataTypes) => {
 
     const Login = sequelize.define( "logins" , {
-        UserID: {
-            type: DataTypes.CHAR(8),
+        UserEmailID: {
+            type: DataTypes.STRING(50),
             allowNull: false,
-            primaryKey: true
+            unique: true
         },
         Password: {
             type: DataTypes.STRING(10)

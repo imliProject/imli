@@ -11,7 +11,7 @@ const LIGHT_GRAY = "#D3D3D3"
 
 const Login = ({ navigation }) => {
 
-  const [userID, setuserID] = useState('');
+  const [UserEmailID, setUserEmailID] = useState('');
   const [Password, setPassword] = useState('');
 
   const { login } = useContext(AuthContext);
@@ -75,7 +75,7 @@ const Login = ({ navigation }) => {
               <TextInput
                 label='Email ID'
                 mode='outlined'
-                onChangeText={(userID) => setuserID(userID.trim())}
+                onChangeText={(UserEmailID) => setUserEmailID(UserEmailID.trim())}
               />
 
               <TextInput
@@ -87,11 +87,11 @@ const Login = ({ navigation }) => {
 
               <Text style={styles.forgotPassword}>Forgot Password ?</Text>
 
-              <Button icon="login" mode="contained" buttonColor="green" style={styles.buttonstyle} onPress={() => { login(userID, Password) }}> Login </Button>
+              <Button icon="login" mode="contained" buttonColor="green" style={styles.buttonstyle} onPress={() => { login(UserEmailID, Password) }}> Login </Button>
 
-              <Button icon="facebook" mode="contained" buttonColor="#000080" style={styles.buttonstyle} onPress={() => { login(userID, Password) }}> Sign In with Facebook </Button>
+              <Button icon="facebook" mode="contained" buttonColor="#000080" style={styles.buttonstyle} onPress={() => { login(UserEmailID, Password) }}> Sign In with Facebook </Button>
 
-              <Button icon="google" mode="contained" buttonColor="#FF0000" style={styles.buttonstyle} onPress={() => { login(userID, Password) }}> Sign In with Google </Button>
+              <Button icon="google" mode="contained" buttonColor="#FF0000" style={styles.buttonstyle} onPress={() => { login(UserEmailID, Password) }}> Sign In with Google </Button>
 
               <View
                 style={{

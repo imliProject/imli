@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { View, StyleSheet, SafeAreaView, Text, ScrollView, TouchableOpacity, Alert, Image } from "react-native";
-import { Avatar, Card, Button, Title, TextInput, Paragraph, label, Provider as PaperProvider } from 'react-native-paper';
+import { View, StyleSheet, SafeAreaView, Text, ScrollView, Alert, Image } from "react-native";
+import { Button, TextInput, Provider as PaperProvider } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import validator from 'validator';
 import axios from 'axios';
@@ -18,15 +18,10 @@ const Signup = ({ navigation }) => {
   const [userMobile, setUserMobile] = useState('');
   const [userName, setUserName] = useState('');
   const [Password, setPassword] = useState('');
-  const [userID, setuserID] = useState('');
-  // const [UserRoleID, setUserRoleID] = useState('');
-  // const {setIsLoggedIn} = React.useContext(AuthContext);
   const pattern = new RegExp(/^\d{1,10}$/);
   const [isError, setIsError] = useState(false);
   const [isPhError, setIsPhError] = useState(false);
-  const [usrdID, setusrdID] = useState('');
-
-  // const categories = ["Admin", "Observer",  "Candidate",  "Supporter", "Trainer"]
+  
   const [showDropDown, setShowDropDown] = useState(false);
 
   const [count, setCount] = useState(0);
@@ -59,17 +54,17 @@ const Signup = ({ navigation }) => {
     }
 
   }
-  const MoveLogin = (UserID, Password) => {
-    console.log('in movelogin', UserID, Password);
-    axios.post(Base_Url + '/users/addlogin', {
+  const MoveLogin = (UserEmailID, Password) => {
+    console.log('in movelogin', UserEmailID, Password);
+    axios.post('http://192.168.1.46:3000/api' + '/users/addlogin', {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json"
       },
-      UserID: UserID, Password: Password
+      UserEmailID: UserEmailID, Password: Password
     }).then(function (response) {
-      console.log("In response:", UserID);
-      Alert.alert("User register successfully \n userID: " + UserID);
+      console.log("In response:", UserEmailID);
+      Alert.alert("User register successfully \n UserEmailID: " + UserEmailID);
       navigation.navigate('Login');
       return response.data;
     })
@@ -83,16 +78,16 @@ const Signup = ({ navigation }) => {
   const register = async () => {
     console.log('in register', Base_Url);
     // alert(called);
-    axios.post(Base_Url + '/users/adduser', {
+    axios.post('http://192.168.1.46:3000/api' + '/users/adduser', {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json"
       },
-      UserID: userID, UserEmailID: userEmailID, UserName: userName, UserMobile: userMobile
+      UserEmailID: userEmailID, UserName: userName, UserMobile: userMobile
     }).then(function (response) {
-      console.log("In response:", userID);
-      MoveLogin(userID, Password);
-      Alert.alert("User register successfully \n userID: " + userID);
+      console.log("In response:", userEmailID);
+      MoveLogin(userEmailID, Password);
+      Alert.alert("User register successfully \n UserEmailID: " + userEmailID);
       return response.data;
     })
       .catch(function (error) {
@@ -126,13 +121,13 @@ const Signup = ({ navigation }) => {
             </View>
 
             <View style={styles.mainbody}>
-              <TextInput
+              {/* <TextInput
                 style={styles.inputStyle}
                 label='UserID'
                 mode='outlined'
                 maxLength={10}
                 onChangeText={(userID) => setuserID(userID)}
-              />
+              /> */}
 
               <TextInput
                 style={styles.inputStyle}

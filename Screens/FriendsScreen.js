@@ -11,7 +11,7 @@ var height = Dimensions.get('window').height;
 
 const FriendsScreen = ({ navigation }) => {
 
-  const { UserName, UserID, UserMobile } = useContext(AuthContext);
+  const { UserName, UserMobile, Id } = useContext(AuthContext);
   const [FriendsRcv, setFriendsRcv] = useState([]);
   const [frndsMob, setFrndsMob] = useState(null);
   const [friendsrqs, setFriendsRqs] = useState(null);
@@ -29,7 +29,7 @@ const FriendsScreen = ({ navigation }) => {
     // console.log('User Mobile :', userMobile);
     // Get Sent Requests 
      
-    axios.get(Base_Url + '/friends/getmobilesbyuid/' + UserID) 
+    axios.get(Base_Url + '/friends/getmobilesbyuid/' + Id) 
       .then(res => {
         
         console.log('from fetch get Friends list:', res.data);
@@ -48,7 +48,7 @@ const FriendsScreen = ({ navigation }) => {
         console.error(error);
       });
     // Get IMLI friends
-    axios.get(Base_Url + '/friends/getifriendsbyid/' + UserID)
+    axios.get(Base_Url + '/friends/getifriendsbyid/' + Id)
       .then(res => {
         console.log('from fetch get Friends list:', res.data);
         setImliFrnds(res.data);
@@ -61,7 +61,7 @@ const FriendsScreen = ({ navigation }) => {
 
   const CheckImliId = () => {
 
-    console.log('from fetch get Friends Mobile:', frndsMob);
+    console.log('from fetch get Friends Mobile:', frndsMob, Base_Url);
 
     axios.get(Base_Url + '/users/getusrbymob/' + frndsMob,  {
       headers: {
@@ -70,12 +70,12 @@ const FriendsScreen = ({ navigation }) => {
       },
     })
       .then(response => {
-        console.log('Response :', response.data)
+        console.log('Response........................................................................ :', response.data)
         if (response.data.length > 0) {
           userMob.current = UserMobile
           status.current = 'S'
           usrfrndmob.current = frndsMob
-          frndid.current = UserID
+          frndid.current = Id
           // touid.current = response.data[0].UserID
           touid.current = ' '
           friendsdtlSave()
@@ -109,6 +109,7 @@ const FriendsScreen = ({ navigation }) => {
       UserMobile: userMob, UserFrndsMobile: usrfrndmob, RequestStatus: 'S'
     }).then(function (response) {
       Alert.alert("Record Deleted successfully");
+      
 
       return response; 
     })

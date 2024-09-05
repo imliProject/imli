@@ -1,11 +1,12 @@
 module.exports = (sequelize, DataTypes) => {
 
     const UsrFrnds = sequelize.define( "usrfrnds" , {
-        userID: {
-            type: DataTypes.CHAR(8),
-            allowNull: false
+        UserEmailID: {
+            type: DataTypes.STRING(50),
+            allowNull: false,
+            unique: true
         },
-        ToUid: {
+        ToEmailID: {
             type: DataTypes.CHAR(8)
         },
         FromMob: {

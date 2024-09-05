@@ -87,7 +87,19 @@ android {
             storePassword 'android'
             keyAlias 'androiddebugkey'
             keyPassword 'android'
+            // storeFile file('C:/Program Files/Java/jdk-17/bin/my_release_key.keystore')
+            // storePassword MYAPP_UPLOAD_STORE_PASSWORD
+            // keyAlias MYAPP_UPLOAD_KEY_ALIAS
+            // keyPassword MYAPP_UPLOAD_KEY_PASSWORD
         }
+    //     release {
+    //     if (project.hasProperty('MYAPP_UPLOAD_STORE_FILE')) {
+    //         storeFile file(MYAPP_UPLOAD_STORE_FILE)
+    //         storePassword MYAPP_UPLOAD_STORE_PASSWORD
+    //         keyAlias MYAPP_UPLOAD_KEY_ALIAS
+    //         keyPassword MYAPP_UPLOAD_KEY_PASSWORD
+    //     }
+    // }
     }
     buildTypes {
         debug {
@@ -107,6 +119,8 @@ dependencies {
     // The version of react-native is set by the React Native Gradle Plugin
     implementation("com.facebook.react:react-android")
     implementation project(":react-native-razorpay")
+    implementation 'com.google.android.gms:play-services-auth:20.0.0'
+    implementation "androidx.browser:browser:1.2.0"
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}")
     debugImplementation("com.facebook.flipper:flipper-network-plugin:${FLIPPER_VERSION}") {

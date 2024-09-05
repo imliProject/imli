@@ -1,7 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
 
     const ProfileImg = sequelize.define( "profileimgs" , {
-        userID: {
+        EmailID: {
             type: DataTypes.CHAR(8),
             allowNull: false,
             primaryKey: true

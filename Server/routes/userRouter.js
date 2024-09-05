@@ -39,13 +39,13 @@ const router = express.Router();
 // router.get('/getimobilesbyid/:userID', friendsController.getIMobilesById)
 
 
-router.get('/getadmin/:userID/:Password', userController.getAdmin)
+router.get('/getadmin/:UserEmailID/:Password', userController.getAdmin)
 router.put('/updtusraddr/:UserID', userController.UserAddrsUpdt)
 router.put('/updtusrpic/:UserID', userController.UserPicUpdt)
 router.get('/getuseraddress/:UserID', userController.getUserAddress)
 router.get('/getusrbymob/:ToMob', userController.getUsrByMob)
-router.get('/getoneuser/:UserID', userController.getOneUser)
-router.get('/getlogin/:UserID/:Password', userController.getLogin)
+router.get('/getoneuser/:UserEmailID', userController.getOneUser)
+router.get('/getlogin/:UserEmailID/:Password', userController.getLogin)
 router.post('/addlogin', userController.addLogin)
 router.post('/adduser', userController.addUser)
 router.post('/adduseradress', userController.addUserAddress)

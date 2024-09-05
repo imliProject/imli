@@ -117,11 +117,9 @@ const UserWishList = db.UserWishList;
 const addUser = async (req, res) => {
   
   let info = {
-    UserID: req.body.UserID,
     UserName: req.body.UserName,
     UserEmailID: req.body.UserEmailID,
     UserMobile: req.body.UserMobile,
-    // UserPicPath: req.body.UserPicPath,
   }
   console.log('in addUser');
   const exuser = await NewUser.findOne({ where: {UserMobile: req.body.UserMobile} });
@@ -264,7 +262,7 @@ const getUserItemsCount = async (req, res) => {
 }
 
 const getUsrByMob = async (req, res)  => {
-  // console.log( 'the requested param:', req );
+  console.log( 'the requested param:', req );
   const umobile = req.params.ToMob;
   console.log( 'the requested param:', umobile );
   let usrdtl = await NewUser.findAll({
@@ -415,16 +413,16 @@ const getAdmin = async (req, res) => {
 
 }
 const getLogin = async (req, res) => {
-  const id = req.params.UserID;
+  const id = req.params.UserEmailID;
   const Password = req.params.Password;
-  console.log("UserID ", id, Password)
+  
   Login.findOne({
-    where: { userID: id, Password: Password },
+    where: { UserEmailID: id, Password: Password },
   })
     .then(data => {
       if (data) {
 
-        const jsontoken = sign({ result: data.userID }, "jwt123", {
+        const jsontoken = sign({ result: data.UserEmailID }, "jwt123", {
           expiresIn: "1h"
         })
         console.log('the data jsontoken :', jsontoken);
@@ -446,11 +444,11 @@ const getLogin = async (req, res) => {
 const addLogin = async (req, res) => {
   
   let info = {
-    UserID: req.body.UserID,
+    UserEmailID: req.body.UserEmailID,
     Password: req.body.Password
   }
 
-  console.log('in addLogin' , req.body.UserID);
+  console.log('in addLogin' , req.body.UserEmailID);
   const login = await Login.create(info)
   res.status(200).send(login)
 }
@@ -467,23 +465,23 @@ const addLogin = async (req, res) => {
 //   res.status(200).send(user)
 // }
 const getOneUser = async (req, res) => {
-  const id = req.params.UserID;
-  console.log(" In UgetOneUser UserID ", id);
+  const id = req.params.UserEmailID;
+  console.log(" In UgetOneUser UserEmailID ", id);
   NewUser.findOne({
-    where: { UserID: id },
+    where: { UserEmailID: id },
   })
     .then(data => {
       if (data) {
         res.send(data);
       } else {
         res.status(404).send({
-          message: `Cannot find User with userID=${id}.`
+          message: `Cannot find User with UserEmailID=${id}.`
         });
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: "Error retrieving User with UserID=" + id
+        message: "Error retrieving User with UserEmailID=" + id
       });
     });
 };

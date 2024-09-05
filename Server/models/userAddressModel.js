@@ -1,7 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
 
     const UserAddress = sequelize.define( "useraddress" , {
-        UserID: {
+        EmailID: {
             type: DataTypes.CHAR(8),
             allowNull: false,
         },

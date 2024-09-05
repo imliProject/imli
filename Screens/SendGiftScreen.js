@@ -4,7 +4,7 @@ import { Card, Title, Paragraph, TextInput, Provider as PaperProvider } from 're
 import axios from 'axios';
 import { AuthContext } from '../Context/AuthContext';
 import { Base_Url } from '@env';
-import HomeScreen from './HomeScreen';
+import HomeScreen from './HomeScreen_old';
 
 var width = Dimensions.get('window').width;
 var height = Dimensions.get('window').height;

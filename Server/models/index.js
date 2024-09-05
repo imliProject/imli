@@ -33,121 +33,110 @@ db.Sequelize = Sequelize
 db.sequelize = sequelize
 
 
-// db.usrfrnds = require('./usrFrndsModel.js')(sequelize, DataTypes)
-// db.useroccs = require('./occListModel.js')(sequelize, DataTypes)
-// db.allcats = require('./allCatModel.js')(sequelize, DataTypes)
-// db.subcats = require('./subCatModel.js')(sequelize, DataTypes)
-// db.giftcats = require('./giftCatModel.js')(sequelize, DataTypes)
-// db.profileimgs = require('./profileModel.js')(sequelize, DataTypes)
-
-// db.users = require('./userModel.js')(sequelize, DataTypes)
-// db.useraddrs = require('./userAdressModel.js')(sequelize, DataTypes)
-// db.alldtlcats = require('./allCatDtlsModel.js')(sequelize, DataTypes)
-
-db.logins = require('./loginModel.js')(sequelize, DataTypes)
-db.Vendors = require('./vendorModel.js')(sequelize, DataTypes)
 db.Newusers = require('./usersModel.js')(sequelize, DataTypes)
-db.UserAddress = require('./userAddressModel.js')(sequelize, DataTypes)
-db.Occasions = require('./occasionModel.js')(sequelize, DataTypes)
-db.CategoryDtls = require('./categoryDtlsModel.js')(sequelize, DataTypes)
-db.ItemDtls = require('./itemdtlModel.js')(sequelize, DataTypes)
-db.UserWishList  = require('./userwishlistModel.js')(sequelize, DataTypes)
-db.UsrImliFrnds = require('./userImliFrndsModel.js')(sequelize, DataTypes)
+db.logins = require('./loginModel.js')(sequelize, DataTypes)
+// db.Vendors = require('./vendorModel.js')(sequelize, DataTypes)
+// db.UserAddress = require('./userAddressModel.js')(sequelize, DataTypes)
+// db.Occasions = require('./occasionModel.js')(sequelize, DataTypes)
+// db.CategoryDtls = require('./categoryDtlsModel.js')(sequelize, DataTypes)
+// db.ItemDtls = require('./itemdtlModel.js')(sequelize, DataTypes)
+// db.UserWishList  = require('./userwishlistModel.js')(sequelize, DataTypes)
+// db.UsrImliFrnds = require('./userImliFrndsModel.js')(sequelize, DataTypes)
 
 
 //relations
 
-db.Newusers.hasMany(db.UsrImliFrnds, {
-  foreignKey: "UserID",
-  sourceKey: "UserID",
-  uniqueKey: "usr_frnd_fk", // foreign key constraint name
-  onDelete: "RESTRICT", // ON DELETE config
-  onUpdate: "RESTRICT", // ON UPDATE config
-  constraints: false, // remove ON DELETE and ON UPDATE constraints
-})
-db.UsrImliFrnds.belongsTo(db.Newusers, {
-  foreignKey: "UserID",
-  targetKey: "UserID"
-});
+// db.Newusers.hasMany(db.UsrImliFrnds, {
+//   foreignKey: "UserID",
+//   sourceKey: "UserID",
+//   uniqueKey: "usr_frnd_fk", // foreign key constraint name
+//   onDelete: "RESTRICT", // ON DELETE config
+//   onUpdate: "RESTRICT", // ON UPDATE config
+//   constraints: false, // remove ON DELETE and ON UPDATE constraints
+// })
+// db.UsrImliFrnds.belongsTo(db.Newusers, {
+//   foreignKey: "UserID",
+//   targetKey: "UserID"
+// });
 
-db.Newusers.hasOne(db.UserAddress, {
-  foreignKey: "UserID",
-  sourceKey: "UserID",
-  uniqueKey: "addr_user_fk", // foreign key constraint name
-  onDelete: "RESTRICT", // ON DELETE config
-  onUpdate: "RESTRICT", // ON UPDATE config
-  constraints: false, // remove ON DELETE and ON UPDATE constraints
-})
+// db.Newusers.hasOne(db.UserAddress, {
+//   foreignKey: "UserID",
+//   sourceKey: "UserID",
+//   uniqueKey: "addr_user_fk", // foreign key constraint name
+//   onDelete: "RESTRICT", // ON DELETE config
+//   onUpdate: "RESTRICT", // ON UPDATE config
+//   constraints: false, // remove ON DELETE and ON UPDATE constraints
+// })
 
-db.Newusers.hasMany(db.Occasions, {
-  foreignKey: "UpdatedBy",
-  sourceKey: "UserID"
-  // uniqueKey: "addr_userocc_fk", // foreign key constraint name
-  // onDelete: "RESTRICT", // ON DELETE config
-  // onUpdate: "RESTRICT", // ON UPDATE config
-  // constraints: false, // remove ON DELETE and ON UPDATE constraints
-})
+// db.Newusers.hasMany(db.Occasions, {
+//   foreignKey: "UpdatedBy",
+//   sourceKey: "UserID"
+//   // uniqueKey: "addr_userocc_fk", // foreign key constraint name
+//   // onDelete: "RESTRICT", // ON DELETE config
+//   // onUpdate: "RESTRICT", // ON UPDATE config
+//   // constraints: false, // remove ON DELETE and ON UPDATE constraints
+// })
 
 db.Newusers.hasOne(db.logins, {
-    foreignKey: "UserID",
-    sourceKey: "UserID",
+    foreignKey: "UserEmailID",
+    sourceKey: "UserEmailID",
     uniqueKey: "addr_user_fk", // foreign key constraint name
     onDelete: "RESTRICT", // ON DELETE config
     onUpdate: "RESTRICT", // ON UPDATE config
     constraints: false, // remove ON DELETE and ON UPDATE constraints
   })
  
-db.Newusers.hasMany(db.UserWishList, {
-  foreignKey: "UserID",
-  sourceKey: "UserID",
-  uniqueKey: "usr_wish_fk", // foreign key constraint name
-  onDelete: "RESTRICT", // ON DELETE config
-  onUpdate: "RESTRICT", // ON UPDATE config
-  constraints: false, // remove ON DELETE and ON UPDATE constraints
-})
-db.UserWishList.belongsTo(db.Newusers, {
-  foreignKey: "UserID",
-  targetKey: "UserID"
-});
+// db.Newusers.hasMany(db.UserWishList, {
+//   foreignKey: "UserID",
+//   sourceKey: "UserID",
+//   uniqueKey: "usr_wish_fk", // foreign key constraint name
+//   onDelete: "RESTRICT", // ON DELETE config
+//   onUpdate: "RESTRICT", // ON UPDATE config
+//   constraints: false, // remove ON DELETE and ON UPDATE constraints
+// })
+// db.UserWishList.belongsTo(db.Newusers, {
+//   foreignKey: "UserID",
+//   targetKey: "UserID"
+// });
 
-db.ItemDtls.belongsTo(db.CategoryDtls, {
-  foreignKey: "CategoryID",
-  targetKey: "CategoryID"
-});
-db.CategoryDtls.hasMany(db.ItemDtls, {
-foreignKey: "CategoryID",
-sourceKey: "CategoryID",
-uniqueKey: "catitem_item_fk", // foreign key constraint name
-onDelete: "RESTRICT", // ON DELETE config
-onUpdate: "RESTRICT", // ON UPDATE config
-constraints: false, // remove ON DELETE and ON UPDATE constraints
-});
-db.ItemDtls.belongsTo(db.Vendors, {
-  foreignKey: "VendID",
-  targetKey: "VendID"
-});
-db.Vendors.hasMany(db.ItemDtls, {
-foreignKey: "VendID",
-sourceKey: "VendID",
-uniqueKey: "venditem_item_fk", // foreign key constraint name
-onDelete: "RESTRICT", // ON DELETE config
-onUpdate: "RESTRICT", // ON UPDATE config
-constraints: false, // remove ON DELETE and ON UPDATE constraints
-})
+// db.ItemDtls.belongsTo(db.CategoryDtls, {
+//   foreignKey: "CategoryID",
+//   targetKey: "CategoryID"
+// });
+// db.CategoryDtls.hasMany(db.ItemDtls, {
+// foreignKey: "CategoryID",
+// sourceKey: "CategoryID",
+// uniqueKey: "catitem_item_fk", // foreign key constraint name
+// onDelete: "RESTRICT", // ON DELETE config
+// onUpdate: "RESTRICT", // ON UPDATE config
+// constraints: false, // remove ON DELETE and ON UPDATE constraints
+// });
+// db.ItemDtls.belongsTo(db.Vendors, {
+//   foreignKey: "VendID",
+//   targetKey: "VendID"
+// });
+// db.Vendors.hasMany(db.ItemDtls, {
+// foreignKey: "VendID",
+// sourceKey: "VendID",
+// uniqueKey: "venditem_item_fk", // foreign key constraint name
+// onDelete: "RESTRICT", // ON DELETE config
+// onUpdate: "RESTRICT", // ON UPDATE config
+// constraints: false, // remove ON DELETE and ON UPDATE constraints
+// })
 
-db.ItemDtls.hasMany(db.UserWishList, {
-  foreignKey: "ItemID",
-  sourceKey: "ItemID",
-  uniqueKey: "wish_item_fk", // foreign key constraint name
-  onDelete: "RESTRICT", // ON DELETE config
-  onUpdate: "RESTRICT", // ON UPDATE config
-  constraints: false, // remove ON DELETE and ON UPDATE constraints
-})
+// db.ItemDtls.hasMany(db.UserWishList, {
+//   foreignKey: "ItemID",
+//   sourceKey: "ItemID",
+//   uniqueKey: "wish_item_fk", // foreign key constraint name
+//   onDelete: "RESTRICT", // ON DELETE config
+//   onUpdate: "RESTRICT", // ON UPDATE config
+//   constraints: false, // remove ON DELETE and ON UPDATE constraints
+// })
 
-db.UserWishList.belongsTo(db.ItemDtls, {
-  foreignKey: "ItemID",
-  targetKey: "ItemID",
-});
+// db.UserWishList.belongsTo(db.ItemDtls, {
+//   foreignKey: "ItemID",
+//   targetKey: "ItemID",
+// });
 
 
 // db.users.hasMany(db.usrfrnds, {
@@ -368,7 +357,7 @@ db.UserWishList.belongsTo(db.ItemDtls, {
 
 //sync through sequelize
 // db.sequelize.sync({ alter: true } force: false)
-db.sequelize.sync({ force: false })
+db.sequelize.sync({  alter: true })
   .then(() => {
     console.log(' re-sync done')
   })

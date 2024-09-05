@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { View, StyleSheet, SafeAreaView, TouchableOpacity, Text, Image, ImageBackground, ScrollView } from "react-native";
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import {AuthContext} from '../Context/AuthContext';
-import HomeScreen from '../Screens/HomeScreen';
+import HomeScreen from '../Screens/HomeScreen_old';
 import GiftCatScreen from  '../Screens/GiftCatScreen';
 // import UserCatScreen from '../Screens/UserCatScreen';
 import UserOccScreen from '../Screens/UserOccScreen';
