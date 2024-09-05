@@ -12,7 +12,8 @@ import axios from 'axios';
 
 const HomeScreen = ({ navigation }) => {
     return (
-    <><Header />
+    <>
+    <Header />
     <MessageCardList />
     <PhoneList />
     
